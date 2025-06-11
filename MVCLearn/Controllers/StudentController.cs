@@ -9,6 +9,7 @@ namespace MVCLearn.Controllers
     {
         //Code to access the database
         private readonly MyAppContext _db;
+        private DbSet<Student> Students => _db.Students;
         public StudentController(MyAppContext db)
         {
             _db = db;
@@ -17,7 +18,7 @@ namespace MVCLearn.Controllers
         //Code to get the list of students from the database and display it in the view
         public async Task<IActionResult> Index()
         {
-            var student = await _db.Students.ToListAsync();
+            var student = await Students.ToListAsync();
             return View(student);
         }
 
@@ -39,7 +40,7 @@ namespace MVCLearn.Controllers
         }
         public async Task<IActionResult> Edit(int? id)
         {
-            var student = await _db.Students.FindAsync(id);
+            var student = await Students.FirstOrDefaultAsync(s => s.Id == id);
             return View(student);
         }
         [HttpPost]
@@ -52,6 +53,22 @@ namespace MVCLearn.Controllers
                 return RedirectToAction("Index");
             }
             return View(student);
+        }
+        public async Task<IActionResult> Delete(int? id)
+        {
+            var student = await Students.FindAsync(id);
+            return View(student);
+        }
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var student = await Students.FindAsync(id);
+            if (student != null)
+            {
+                Students.Remove(student);
+                await _db.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
         }
     }
 }
