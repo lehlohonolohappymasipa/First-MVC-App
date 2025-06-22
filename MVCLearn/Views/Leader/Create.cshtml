@@ -1,0 +1,72 @@
+﻿@model MVCLearn.Models.Leader
+
+@{
+    ViewData["Title"] = "Create Leader";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Create New Leader</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label"></label>
+                            <input asp-for="Name" class="form-control" placeholder="Enter leader's name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-2">
+                            <strong class="d-block mb-2">Tick attributes that apply:</strong>
+
+                            <div class="form-check mb-1">
+                                <input asp-for="IsVisionary" class="form-check-input" />
+                                <label asp-for="IsVisionary" class="form-check-label"></label>
+                            </div>
+
+                            <div class="form-check mb-1">
+                                <input asp-for="HasIntegrity" class="form-check-input" />
+                                <label asp-for="HasIntegrity" class="form-check-label"></label>
+                            </div>
+
+                            <div class="form-check mb-1">
+                                <input asp-for="HasHumility" class="form-check-input" />
+                                <label asp-for="HasHumility" class="form-check-label"></label>
+                            </div>
+
+                            <div class="form-check mb-1">
+                                <input asp-for="IsResilient" class="form-check-input" />
+                                <label asp-for="IsResilient" class="form-check-label"></label>
+                            </div>
+
+                            <div class="form-check mb-1">
+                                <input asp-for="IsDecisive" class="form-check-input" />
+                                <label asp-for="IsDecisive" class="form-check-label"></label>
+                            </div>
+                        </div>
+
+
+                        <div class="form-check mb-2">
+                            <input asp-for="HasHumility" class="form-check-input" />
+                            <label asp-for="HasHumility" class="form-check-label"></label>
+                        </div>
+
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-plus-circle"></i> Create
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

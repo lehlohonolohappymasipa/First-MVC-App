@@ -1,0 +1,40 @@
+﻿@model List<MVCLearn.Models.Leader>
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2>Leader Details</h2>
+        </div>
+        @foreach (var leader in Model)
+        {
+            <div class="card-body">
+                <p><strong>Name:</strong> @leader.Name</p>
+
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <strong>Visionary:</strong> @leader.IsVisionary ? "Yes" : "No")
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Integrity:</strong> @leader.HasIntegrity ? "Yes" : "No")
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Humility:</strong> @leader.HasHumility ? "Yes" : "No")
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Resilient:</strong> @leader.IsResilient ? "Yes" : "No")
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Decisive:</strong> @leader.IsDecisive ? "Yes" : "No")
+                    </li>
+                </ul>
+
+                <div class="mt-3">
+                    <strong>Is Leader:</strong>
+                    <span class="badge @(leader.IsLeader ? " bg-success" : "bg-danger" )">
+                        @(leader.IsLeader ? "Yes" : "No")
+                    </span>
+                </div>
+    </div>
+        }
+    </div>
+</div>

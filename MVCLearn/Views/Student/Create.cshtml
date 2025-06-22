@@ -3,28 +3,36 @@
     ViewData["Title"] = "Create Student";
 }
 
-<h3>@ViewData["Title"]</h3>
-
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label for="StudentNo">Student Number</label>
-        <input type="number" class="form-control" asp-for="StudentNo" required/>
+<div class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Add New Student</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+                <div class="mb-3">
+                    <label asp-for="StudentNo" class="form-label">Student Number</label>
+                    <input type="number" class="form-control" asp-for="StudentNo" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" asp-for="Name" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Course" class="form-label">Course</label>
+                    <input type="text" class="form-control" asp-for="Course" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Year" class="form-label">Starting Year</label>
+                    <input type="number" class="form-control" asp-for="Year" required />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Institution" class="form-label">Institution</label>
+                    <input type="text" class="form-control" asp-for="Institution" required />
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+            </form>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="Name">Full Name</label>
-        <input type="text" class="form-control" asp-for="Name" />
-    </div>
-    <div class="form-group">
-        <label for="Course">Course</label>
-        <input type="text" class="form-control" asp-for="Course" required/>
-    </div>
-    <div class="form-group">
-        <label for="Year">Starting year</label>
-        <input type="number" class="form-control" asp-for="Year" />
-    </div>
-    <div class="form-group">
-        <label for="Institution">Institution</label>
-        <input type="text" class="form-control" asp-for="Institution" />
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+</div>

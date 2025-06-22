@@ -3,6 +3,7 @@ using MVCLearn.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCLearn.Migrations
 {
     [DbContext(typeof(MyAppContext))]
-    partial class MyAppContextModelSnapshot : ModelSnapshot
+    [Migration("20250618185412_one to one")]
+    partial class onetoone
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,52 +24,6 @@ namespace MVCLearn.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("MVCLearn.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Electronics"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Books"
-                        });
-                });
-
-            modelBuilder.Entity("MVCLearn.Models.Client", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Clients");
-                });
-
             modelBuilder.Entity("MVCLearn.Models.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -74,9 +31,6 @@ namespace MVCLearn.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -90,8 +44,6 @@ namespace MVCLearn.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Items");
 
                     b.HasData(
@@ -102,21 +54,6 @@ namespace MVCLearn.Migrations
                             Price = 40.0,
                             SerialNumberId = 10
                         });
-                });
-
-            modelBuilder.Entity("MVCLearn.Models.ItemClient", b =>
-                {
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ItemId", "ClientId");
-
-                    b.HasIndex("ClientId");
-
-                    b.ToTable("ItemClients");
                 });
 
             modelBuilder.Entity("MVCLearn.Models.Leader", b =>
@@ -203,9 +140,6 @@ namespace MVCLearn.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SerialNumberId")
-                        .HasColumnType("int");
-
                     b.Property<int>("StudentNo")
                         .HasColumnType("int");
 
@@ -214,37 +148,7 @@ namespace MVCLearn.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SerialNumberId");
-
                     b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("MVCLearn.Models.Item", b =>
-                {
-                    b.HasOne("MVCLearn.Models.Category", "Category")
-                        .WithMany("Items")
-                        .HasForeignKey("CategoryId");
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("MVCLearn.Models.ItemClient", b =>
-                {
-                    b.HasOne("MVCLearn.Models.Client", "Client")
-                        .WithMany("ItemClients")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MVCLearn.Models.Item", "Item")
-                        .WithMany("ItemClients")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Client");
-
-                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("MVCLearn.Models.SerialNumber", b =>
@@ -256,29 +160,8 @@ namespace MVCLearn.Migrations
                     b.Navigation("Item");
                 });
 
-            modelBuilder.Entity("MVCLearn.Models.Student", b =>
-                {
-                    b.HasOne("MVCLearn.Models.SerialNumber", "SerialNumber")
-                        .WithMany()
-                        .HasForeignKey("SerialNumberId");
-
-                    b.Navigation("SerialNumber");
-                });
-
-            modelBuilder.Entity("MVCLearn.Models.Category", b =>
-                {
-                    b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("MVCLearn.Models.Client", b =>
-                {
-                    b.Navigation("ItemClients");
-                });
-
             modelBuilder.Entity("MVCLearn.Models.Item", b =>
                 {
-                    b.Navigation("ItemClients");
-
                     b.Navigation("SerialNumber");
                 });
 #pragma warning restore 612, 618

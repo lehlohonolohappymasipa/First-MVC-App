@@ -1,35 +1,61 @@
 ﻿@model List<Student>
 
 @{
-    ViewData["Title"] = "List of enrolled Students.";
+    ViewData["Title"] = "List of Enrolled Students";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Student Directory</h4>
+            <a asp-action="Create" class="btn btn-light btn-sm">
+                <i class="bi bi-plus-circle"></i> Add Student
+            </a>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0 align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Student Number</th>
+                        <th>Full Name</th>
+                        <th>Course</th>
+                        <th>Year</th>
+                        <th>Institution</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var student in Model)
+                        {
+                            <tr>
+                                <td><span class="badge bg-secondary">@student.StudentNo</span></td>
+                                <td>@student.Name</td>
+                                <td><span class="badge bg-info text-dark">@student.Course</span></td>
+                                <td>@student.Year</td>
+                                <td>@student.Institution</td>
+                                <td class="text-center">
+                                    <a asp-action="Edit" asp-route-id="@student.Id" class="btn btn-outline-primary btn-sm me-1" title="Edit">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@student.Id" class="btn btn-outline-danger btn-sm" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">No students enrolled.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Student Number</th>
-            <th>Full Name</th>
-            <th>Course</th>
-            <th>First Year</th>
-            <th>Institution</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var student in Model)
-        {
-            <tr>
-                <td>@student.StudentNo</td>
-                <td>@student.Name</td>
-                <td>@student.Course</td>
-                <td>@student.Year</td>
-                <td>@student.Institution</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@student.Id">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@student.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
